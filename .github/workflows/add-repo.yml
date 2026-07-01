@@ -1,0 +1,39 @@
+name: Add Repository
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo_url:
+        description: GitHub repository URL to add
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  add-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm run add -- "${{ inputs.repo_url }}"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md data/repos.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Add ${{ inputs.repo_url }}"
+          git push

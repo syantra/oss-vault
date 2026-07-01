@@ -1,0 +1,14 @@
+{
+  "name": "oss-vault",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "add": "node scripts/add-repo.mjs",
+    "render": "node scripts/render-readme.mjs",
+    "check": "node scripts/render-readme.mjs --check"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
