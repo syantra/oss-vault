@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "owner": "astral-sh",
+    "name": "uv",
+    "fullName": "astral-sh/uv",
+    "url": "https://github.com/astral-sh/uv",
+    "description": "An extremely fast Python package and project manager, written in Rust.",
+    "homepage": "https://docs.astral.sh/uv",
+    "language": "Rust",
+    "topics": [
+      "packaging",
+      "python",
+      "resolver",
+      "uv"
+    ],
+    "stars": 86968,
+    "forks": 3264,
+    "license": "Apache-2.0",
+    "pushedAt": "2026-07-01T23:36:58Z",
+    "addedAt": "2026-07-02T00:09:19.784Z"
+  }
+]
