@@ -18,5 +18,20 @@
     "license": "Apache-2.0",
     "pushedAt": "2026-07-01T23:36:58Z",
     "addedAt": "2026-07-02T00:09:19.784Z"
+  },
+  {
+    "owner": "facebook",
+    "name": "astryx",
+    "fullName": "facebook/astryx",
+    "url": "https://github.com/facebook/astryx",
+    "description": "An open source design system that's fully customizable and agent ready",
+    "homepage": "http://astryx.atmeta.com",
+    "language": "TypeScript",
+    "topics": [],
+    "stars": 2622,
+    "forks": 133,
+    "license": "MIT",
+    "pushedAt": "2026-07-02T00:24:54Z",
+    "addedAt": "2026-07-02T00:26:47.250Z"
   }
 ]
