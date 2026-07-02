@@ -168,5 +168,21 @@
     "license": "Apache-2.0",
     "pushedAt": "2026-06-30T03:40:11Z",
     "addedAt": "2026-07-02T01:01:49.414Z"
+  },
+  {
+    "owner": "vercel-labs",
+    "name": "openwiki",
+    "fullName": "vercel-labs/openwiki",
+    "url": "https://github.com/vercel-labs/openwiki",
+    "description": "",
+    "homepage": "https://openwiki.sh",
+    "language": "TypeScript",
+    "category": "Miscellaneous",
+    "topics": [],
+    "stars": 17,
+    "forks": 1,
+    "license": "",
+    "pushedAt": "2026-07-02T00:07:59Z",
+    "addedAt": "2026-07-02T03:29:16.916Z"
   }
 ]

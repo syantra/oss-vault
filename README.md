@@ -24,6 +24,11 @@ Run the `Add Repository` workflow from GitHub Actions with a GitHub repository U
 - [facebook/astryx](https://github.com/facebook/astryx) - An open source design system that's fully customizable and agent ready  
   ⭐ 2,622 · 🍴 133 · 📜 MIT · 💻 TypeScript · 🕒 Jul 2, 2026 · 🔗 [Homepage](http://astryx.atmeta.com)
 
+## Miscellaneous
+
+- [vercel-labs/openwiki](https://github.com/vercel-labs/openwiki) - No description provided.  
+  ⭐ 17 · 🍴 1 · 💻 TypeScript · 🕒 Jul 2, 2026 · 🔗 [Homepage](https://openwiki.sh)
+
 ## Utility
 
 - [astral-sh/uv](https://github.com/astral-sh/uv) - An extremely fast Python package and project manager, written in Rust.  
