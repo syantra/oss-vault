@@ -23,7 +23,13 @@ Install or refresh it with:
 hermes gateway restart
 ```
 
-The plugin listens for `pre_gateway_dispatch`. If an incoming message contains a GitHub repository URL and a bookmark intent keyword, it dispatches the GitHub Action and skips normal agent handling.
+The plugin listens for `pre_gateway_dispatch`. If an incoming message contains one or more GitHub repository URLs and a bookmark intent keyword, it dispatches one GitHub Action run with all repositories and skips normal agent handling.
+
+It also registers an explicit Hermes command:
+
+```text
+/vault https://github.com/owner/repo [more repo URLs...]
+```
 
 Bookmark intent keywords include:
 
@@ -35,6 +41,19 @@ The plugin runs:
 
 ```bash
 gh workflow run add-repo.yml --repo syantra/oss-vault --ref main -f repo_url=<repo-url>
+```
+
+Batch messages are supported:
+
+```text
+bookmark these:
+https://github.com/facebook/react
+https://github.com/vercel/next.js
+https://github.com/oven-sh/bun
+```
+
+```text
+/vault https://github.com/facebook/react https://github.com/vercel/next.js
 ```
 
 ## Endpoint

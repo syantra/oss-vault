@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       repo_url:
-        description: GitHub repository URL or message containing one
+        description: GitHub repository URL(s) or message containing them
         required: true
         type: string
 
@@ -35,5 +35,5 @@ jobs:
             echo "No changes to commit"
             exit 0
           fi
-          git commit -m "Add ${{ inputs.repo_url }}"
+          git commit -m "Add bookmarked repo"
           git push

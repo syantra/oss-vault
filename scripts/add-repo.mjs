@@ -11,20 +11,26 @@ const dataPath = path.join(root, "data", "repos.json");
 const repoInput = process.argv.slice(2).join(" ");
 
 if (!repoInput) {
-  console.error("Usage: npm run add -- https://github.com/owner/repo");
+  console.error("Usage: npm run add -- https://github.com/owner/repo [more repo URLs...]");
   process.exit(1);
 }
 
-const repoRef = parseGitHubRepo(repoInput);
-const repo = await fetchRepo(repoRef);
+const repoRefs = parseGitHubRepos(repoInput);
 const repos = await readRepos();
-const key = `${repo.owner}/${repo.name}`.toLowerCase();
-const existingIndex = repos.findIndex((item) => `${item.owner}/${item.name}`.toLowerCase() === key);
+const results = [];
 
-if (existingIndex >= 0) {
-  repos[existingIndex] = { ...repos[existingIndex], ...repo, addedAt: repos[existingIndex].addedAt };
-} else {
-  repos.push(repo);
+for (const repoRef of repoRefs) {
+  const repo = await fetchRepo(repoRef);
+  const key = `${repo.owner}/${repo.name}`.toLowerCase();
+  const existingIndex = repos.findIndex((item) => `${item.owner}/${item.name}`.toLowerCase() === key);
+
+  if (existingIndex >= 0) {
+    repos[existingIndex] = { ...repos[existingIndex], ...repo, addedAt: repos[existingIndex].addedAt };
+    results.push(`Updated ${repo.owner}/${repo.name}`);
+  } else {
+    repos.push(repo);
+    results.push(`Added ${repo.owner}/${repo.name}`);
+  }
 }
 
 repos.sort((a, b) => `${a.owner}/${a.name}`.localeCompare(`${b.owner}/${b.name}`));
@@ -33,14 +39,29 @@ await mkdir(path.dirname(dataPath), { recursive: true });
 await writeFile(dataPath, `${JSON.stringify(repos, null, 2)}\n`);
 await renderReadme({ root, check: false });
 
-console.log(`${existingIndex >= 0 ? "Updated" : "Added"} ${repo.owner}/${repo.name}`);
+console.log(results.join("\n"));
 
-function parseGitHubRepo(input) {
-  const repoUrl = extractGitHubUrl(input);
-  if (!repoUrl) {
+function parseGitHubRepos(input) {
+  const repoUrls = extractGitHubUrls(input);
+  if (repoUrls.length === 0) {
     throw new Error(`No GitHub repository URL found: ${input}`);
   }
 
+  const seen = new Set();
+  const repos = [];
+
+  for (const repoUrl of repoUrls) {
+    const repo = parseGitHubRepo(repoUrl);
+    const key = `${repo.owner}/${repo.name}`.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    repos.push(repo);
+  }
+
+  return repos;
+}
+
+function parseGitHubRepo(repoUrl) {
   let url;
   try {
     url = new URL(repoUrl);
@@ -60,9 +81,9 @@ function parseGitHubRepo(input) {
   return { owner, name: name.replace(/\.git$/, "") };
 }
 
-function extractGitHubUrl(input) {
-  const match = input.match(/https?:\/\/(?:www\.)?github\.com\/[^\s<>"']+/i);
-  return match ? match[0].replace(/[),.;]+$/, "") : null;
+function extractGitHubUrls(input) {
+  return [...input.matchAll(/https?:\/\/(?:www\.)?github\.com\/[^\s<>"']+/gi)]
+    .map((match) => match[0].replace(/[),.;]+$/, ""));
 }
 
 async function fetchRepo({ owner, name }) {
