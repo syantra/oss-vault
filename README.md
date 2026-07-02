@@ -8,6 +8,12 @@ Run the `Add Repository` workflow from GitHub Actions with a GitHub repository U
 
 ## AI Workflow
 
+- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) - Makes your AI agent think like the laziest senior dev in the room. The best code is the code you never wrote.  
+  ⭐ 70,497 · 🍴 3,635 · 📜 MIT · 💻 JavaScript · 🕒 Jul 1, 2026 · 🔗 [Homepage](https://ponytail.dev) · 🏷️ `agent-skills` `ai-agents` `claude` `claude-code` `claude-code-plugin`
+- [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) - 🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking like caveman  
+  ⭐ 79,039 · 🍴 4,454 · 📜 MIT · 💻 JavaScript · 🕒 Jun 12, 2026 · 🔗 [Homepage](https://caveman.so/) · 🏷️ `ai` `anthropic` `caveman` `claude` `claude-code`
+- [Panniantong/Agent-Reach](https://github.com/Panniantong/Agent-Reach) - Give your AI agent eyes to see the entire internet. Read & search Twitter, Reddit, YouTube, GitHub, Bilibili, XiaoHongShu — one CLI, zero API fees.  
+  ⭐ 48,357 · 🍴 3,848 · 📜 MIT · 💻 Python · 🕒 Jun 29, 2026 · 🏷️ `agent-infrastructure` `ai-agent` `ai-search` `automation` `bilibili`
 - [StarTrail-org/PixelRAG](https://github.com/StarTrail-org/PixelRAG) - The end of web parsing. The beginning of scalable pixel-native search. link: https://pixelrag.ai/  
   ⭐ 5,762 · 🍴 455 · 📜 Apache-2.0 · 💻 Python · 🕒 Jun 30, 2026 · 🔗 [Homepage](https://arxiv.org/pdf/2606.28344) · 🏷️ `agent` `ai` `memory` `multimodal` `rag`
 
