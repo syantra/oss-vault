@@ -8,14 +8,14 @@ import { renderReadme } from "./render-readme.mjs";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dataPath = path.join(root, "data", "repos.json");
 
-const repoUrl = process.argv[2];
+const repoInput = process.argv.slice(2).join(" ");
 
-if (!repoUrl) {
+if (!repoInput) {
   console.error("Usage: npm run add -- https://github.com/owner/repo");
   process.exit(1);
 }
 
-const repoRef = parseGitHubRepo(repoUrl);
+const repoRef = parseGitHubRepo(repoInput);
 const repo = await fetchRepo(repoRef);
 const repos = await readRepos();
 const key = `${repo.owner}/${repo.name}`.toLowerCase();
@@ -36,23 +36,33 @@ await renderReadme({ root, check: false });
 console.log(`${existingIndex >= 0 ? "Updated" : "Added"} ${repo.owner}/${repo.name}`);
 
 function parseGitHubRepo(input) {
-  let url;
-  try {
-    url = new URL(input);
-  } catch {
-    throw new Error(`Invalid URL: ${input}`);
+  const repoUrl = extractGitHubUrl(input);
+  if (!repoUrl) {
+    throw new Error(`No GitHub repository URL found: ${input}`);
   }
 
-  if (url.hostname !== "github.com") {
-    throw new Error(`Only github.com URLs are supported: ${input}`);
+  let url;
+  try {
+    url = new URL(repoUrl);
+  } catch {
+    throw new Error(`Invalid URL: ${repoUrl}`);
+  }
+
+  if (url.hostname !== "github.com" && url.hostname !== "www.github.com") {
+    throw new Error(`Only github.com URLs are supported: ${repoUrl}`);
   }
 
   const [owner, name] = url.pathname.split("/").filter(Boolean);
   if (!owner || !name) {
-    throw new Error(`Expected a GitHub repository URL: ${input}`);
+    throw new Error(`Expected a GitHub repository URL: ${repoUrl}`);
   }
 
   return { owner, name: name.replace(/\.git$/, "") };
+}
+
+function extractGitHubUrl(input) {
+  const match = input.match(/https?:\/\/(?:www\.)?github\.com\/[^\s<>"']+/i);
+  return match ? match[0].replace(/[),.;]+$/, "") : null;
 }
 
 async function fetchRepo({ owner, name }) {

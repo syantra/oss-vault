@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       repo_url:
-        description: GitHub repository URL to add
+        description: GitHub repository URL or message containing one
         required: true
         type: string
 

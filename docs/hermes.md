@@ -1,6 +1,6 @@
 # Hermes Trigger
 
-Hermes can add repositories by dispatching the `Add Repository` GitHub Actions workflow.
+Hermes can add repositories by dispatching the `Add Repository` GitHub Actions workflow. The workflow accepts either a bare GitHub repository URL or a message containing one.
 
 ## Endpoint
 
@@ -22,7 +22,7 @@ X-GitHub-Api-Version: 2022-11-28
 {
   "ref": "main",
   "inputs": {
-    "repo_url": "https://github.com/owner/repo"
+    "repo_url": "Found this today: https://github.com/owner/repo"
   }
 }
 ```
