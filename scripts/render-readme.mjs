@@ -39,7 +39,7 @@ function buildReadme(repos) {
     return a.fullName.localeCompare(b.fullName);
   });
 
-  const byLanguage = Map.groupBy(sorted, (repo) => repo.language || "Unknown");
+  const byLanguage = groupBy(sorted, (repo) => repo.language || "Unknown");
   const sections = [...byLanguage.entries()].map(([language, languageRepos]) => {
     const rows = languageRepos.map(formatRepo).join("\n");
     return `## ${language}\n\n${rows}`;
@@ -62,4 +62,21 @@ function formatRepo(repo) {
   ].filter(Boolean).join(" · ");
 
   return `- [${repo.fullName}](${repo.url}) - ${description}  \n  ${meta}`;
+}
+
+function groupBy(items, getKey) {
+  const grouped = new Map();
+
+  for (const item of items) {
+    const key = getKey(item);
+    const group = grouped.get(key);
+
+    if (group) {
+      group.push(item);
+    } else {
+      grouped.set(key, [item]);
+    }
+  }
+
+  return grouped;
 }
