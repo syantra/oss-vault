@@ -8,6 +8,8 @@ Run the `Add Repository` workflow from GitHub Actions with a GitHub repository U
 
 ## Design
 
+- [desko27/react-call](https://github.com/desko27/react-call) - Call & Await React Components  
+  ⭐ 1,285 · 🍴 21 · 💻 TypeScript · 🕒 Jul 1, 2026 · 🔗 [Homepage](https://react-call.desko.dev) · 🏷️ `dialog` `pattern` `react` `typescript`
 - [facebook/astryx](https://github.com/facebook/astryx) - An open source design system that's fully customizable and agent ready  
   ⭐ 2,622 · 🍴 133 · 📜 MIT · 💻 TypeScript · 🕒 Jul 2, 2026 · 🔗 [Homepage](http://astryx.atmeta.com)
 

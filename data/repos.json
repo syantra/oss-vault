@@ -20,6 +20,27 @@
     "addedAt": "2026-07-02T00:09:19.784Z"
   },
   {
+    "owner": "desko27",
+    "name": "react-call",
+    "fullName": "desko27/react-call",
+    "url": "https://github.com/desko27/react-call",
+    "description": "Call & Await React Components",
+    "homepage": "https://react-call.desko.dev",
+    "language": "TypeScript",
+    "category": "Design",
+    "topics": [
+      "dialog",
+      "pattern",
+      "react",
+      "typescript"
+    ],
+    "stars": 1285,
+    "forks": 21,
+    "license": "",
+    "pushedAt": "2026-07-01T16:14:31Z",
+    "addedAt": "2026-07-02T01:00:48.014Z"
+  },
+  {
     "owner": "facebook",
     "name": "astryx",
     "fullName": "facebook/astryx",
