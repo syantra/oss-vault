@@ -95,6 +95,12 @@ async function fetchRepo({ owner, name }) {
     description: payload.description || "",
     homepage: payload.homepage || "",
     language: payload.language || "Unknown",
+    category: inferCategory({
+      name: payload.name,
+      description: payload.description || "",
+      language: payload.language || "",
+      topics: Array.isArray(payload.topics) ? payload.topics : []
+    }),
     topics: Array.isArray(payload.topics) ? payload.topics : [],
     stars: payload.stargazers_count,
     forks: payload.forks_count,
@@ -102,6 +108,27 @@ async function fetchRepo({ owner, name }) {
     pushedAt: payload.pushed_at,
     addedAt: new Date().toISOString()
   };
+}
+
+function inferCategory({ name, description, language, topics }) {
+  const haystack = [name, description, language, ...topics].join(" ").toLowerCase();
+  const rules = [
+    ["Design", ["design", "ui", "ux", "component", "system", "css", "tailwind", "figma", "storybook"]],
+    ["AI Workflow", ["agent", "ai", "llm", "rag", "prompt", "workflow", "automation", "copilot", "assistant"]],
+    ["Developer Tools", ["cli", "devtool", "debug", "build", "compiler", "lint", "format", "test", "sdk"]],
+    ["Data", ["database", "analytics", "warehouse", "etl", "data", "sql", "vector"]],
+    ["Infrastructure", ["infra", "deploy", "container", "kubernetes", "docker", "server", "cloud"]],
+    ["Security", ["security", "auth", "oauth", "secret", "vulnerability", "scanner"]],
+    ["Utility", ["utility", "tool", "manager", "productivity", "package"]]
+  ];
+
+  for (const [category, keywords] of rules) {
+    if (keywords.some((keyword) => haystack.includes(keyword))) {
+      return category;
+    }
+  }
+
+  return "Miscellaneous";
 }
 
 async function readRepos() {

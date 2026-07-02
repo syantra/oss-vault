@@ -34,15 +34,15 @@ export async function renderReadme({ root = defaultRoot, check = false } = {}) {
 
 function buildReadme(repos) {
   const sorted = [...repos].sort((a, b) => {
-    const language = a.language.localeCompare(b.language);
-    if (language !== 0) return language;
+    const category = getCategory(a).localeCompare(getCategory(b));
+    if (category !== 0) return category;
     return a.fullName.localeCompare(b.fullName);
   });
 
-  const byLanguage = groupBy(sorted, (repo) => repo.language || "Unknown");
-  const sections = [...byLanguage.entries()].map(([language, languageRepos]) => {
-    const rows = languageRepos.map(formatRepo).join("\n");
-    return `## ${language}\n\n${rows}`;
+  const byCategory = groupBy(sorted, getCategory);
+  const sections = [...byCategory.entries()].map(([category, categoryRepos]) => {
+    const rows = categoryRepos.map(formatRepo).join("\n");
+    return `## ${category}\n\n${rows}`;
   });
 
   return `# OSS Vault
@@ -59,6 +59,7 @@ ${repos.length === 0 ? "No repositories saved yet." : sections.join("\n\n")}
 
 function formatRepo(repo) {
   const description = repo.description || "No description provided.";
+  const language = repo.language ? `💻 ${repo.language}` : null;
   const topics = repo.topics.length > 0
     ? `🏷️ ${repo.topics.slice(0, 5).map((topic) => `\`${topic}\``).join(" ")}`
     : null;
@@ -68,12 +69,44 @@ function formatRepo(repo) {
     `⭐ ${repo.stars.toLocaleString("en-US")}`,
     `🍴 ${repo.forks.toLocaleString("en-US")}`,
     repo.license ? `📜 ${repo.license}` : null,
+    language,
     updated,
     homepage,
     topics
   ].filter(Boolean).join(" · ");
 
   return `- [${repo.fullName}](${repo.url}) - ${description}  \n  ${meta}`;
+}
+
+function getCategory(repo) {
+  return repo.category || inferCategory(repo);
+}
+
+function inferCategory(repo) {
+  const haystack = [
+    repo.name,
+    repo.fullName,
+    repo.description,
+    repo.language,
+    ...(repo.topics || [])
+  ].join(" ").toLowerCase();
+  const rules = [
+    ["Design", ["design", "ui", "ux", "component", "system", "css", "tailwind", "figma", "storybook"]],
+    ["AI Workflow", ["agent", "ai", "llm", "rag", "prompt", "workflow", "automation", "copilot", "assistant"]],
+    ["Developer Tools", ["cli", "devtool", "debug", "build", "compiler", "lint", "format", "test", "sdk"]],
+    ["Data", ["database", "analytics", "warehouse", "etl", "data", "sql", "vector"]],
+    ["Infrastructure", ["infra", "deploy", "container", "kubernetes", "docker", "server", "cloud"]],
+    ["Security", ["security", "auth", "oauth", "secret", "vulnerability", "scanner"]],
+    ["Utility", ["utility", "tool", "manager", "productivity", "package"]]
+  ];
+
+  for (const [category, keywords] of rules) {
+    if (keywords.some((keyword) => haystack.includes(keyword))) {
+      return category;
+    }
+  }
+
+  return "Miscellaneous";
 }
 
 function formatDate(value) {

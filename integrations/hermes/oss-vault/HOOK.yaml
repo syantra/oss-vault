@@ -1,4 +1,0 @@
-name: oss-vault
-description: Dispatch oss-vault GitHub Action when a gateway message contains a GitHub repo URL
-events:
-  - agent:start

@@ -2,28 +2,36 @@
 
 Hermes can add repositories by dispatching the `Add Repository` GitHub Actions workflow. The workflow accepts either a bare GitHub repository URL or a message containing one.
 
-## Local Gateway Hook
+## Local Gateway Plugin
 
-This machine is wired through a Hermes gateway hook:
+This machine is wired through a Hermes plugin:
 
 ```text
-~/.hermes/hooks/oss-vault/
+~/.hermes/plugins/oss-vault/
 ```
 
 The repo-owned copy lives in:
 
 ```text
-integrations/hermes/oss-vault/
+integrations/hermes/oss-vault-plugin/
 ```
 
 Install or refresh it with:
 
 ```bash
-./scripts/install-hermes-hook.sh
+./scripts/install-hermes-plugin.sh
 hermes gateway restart
 ```
 
-The hook listens for `agent:start`, extracts the first GitHub repository URL from the incoming message, and runs:
+The plugin listens for `pre_gateway_dispatch`. If an incoming message contains a GitHub repository URL and a bookmark intent keyword, it dispatches the GitHub Action and skips normal agent handling.
+
+Bookmark intent keywords include:
+
+```text
+bookmark, bookmakr, save, vault, archive, oss-vault
+```
+
+The plugin runs:
 
 ```bash
 gh workflow run add-repo.yml --repo syantra/oss-vault --ref main -f repo_url=<repo-url>

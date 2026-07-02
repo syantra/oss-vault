@@ -1,0 +1,5 @@
+name: oss-vault
+version: 0.1.0
+description: Intercept bookmark-intent GitHub links and dispatch oss-vault workflow
+provides_hooks:
+  - pre_gateway_dispatch
