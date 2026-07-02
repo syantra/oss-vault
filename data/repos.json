@@ -54,5 +54,31 @@
     "license": "MIT",
     "pushedAt": "2026-07-02T00:24:54Z",
     "addedAt": "2026-07-02T00:26:47.250Z"
+  },
+  {
+    "owner": "StarTrail-org",
+    "name": "PixelRAG",
+    "fullName": "StarTrail-org/PixelRAG",
+    "url": "https://github.com/StarTrail-org/PixelRAG",
+    "description": "The end of web parsing. The beginning of scalable pixel-native search. link: https://pixelrag.ai/",
+    "homepage": "https://arxiv.org/pdf/2606.28344",
+    "language": "Python",
+    "category": "AI Workflow",
+    "topics": [
+      "agent",
+      "ai",
+      "memory",
+      "multimodal",
+      "rag",
+      "search",
+      "searchengine",
+      "vision",
+      "vlm"
+    ],
+    "stars": 5762,
+    "forks": 455,
+    "license": "Apache-2.0",
+    "pushedAt": "2026-06-30T03:40:11Z",
+    "addedAt": "2026-07-02T01:01:49.414Z"
   }
 ]
