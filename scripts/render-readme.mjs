@@ -49,19 +49,40 @@ function buildReadme(repos) {
 
 A GitHub-backed vault for saving, organizing, and auto-curating interesting open source repositories from Telegram.
 
+## Add a repo
+
+Run the \`Add Repository\` workflow from GitHub Actions with a GitHub repository URL, or dispatch it from Hermes using the API shape in [docs/hermes.md](docs/hermes.md).
+
 ${repos.length === 0 ? "No repositories saved yet." : sections.join("\n\n")}
 `;
 }
 
 function formatRepo(repo) {
   const description = repo.description || "No description provided.";
+  const topics = repo.topics.length > 0
+    ? `🏷️ ${repo.topics.slice(0, 5).map((topic) => `\`${topic}\``).join(" ")}`
+    : null;
+  const homepage = repo.homepage ? `🔗 [Homepage](${repo.homepage})` : null;
+  const updated = repo.pushedAt ? `🕒 ${formatDate(repo.pushedAt)}` : null;
   const meta = [
-    `${repo.stars.toLocaleString("en-US")} stars`,
-    repo.license ? repo.license : null,
-    repo.topics.length > 0 ? repo.topics.slice(0, 5).map((topic) => `\`${topic}\``).join(" ") : null
+    `⭐ ${repo.stars.toLocaleString("en-US")}`,
+    `🍴 ${repo.forks.toLocaleString("en-US")}`,
+    repo.license ? `📜 ${repo.license}` : null,
+    updated,
+    homepage,
+    topics
   ].filter(Boolean).join(" · ");
 
   return `- [${repo.fullName}](${repo.url}) - ${description}  \n  ${meta}`;
+}
+
+function formatDate(value) {
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC"
+  }).format(new Date(value));
 }
 
 function groupBy(items, getKey) {
